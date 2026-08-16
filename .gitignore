@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+.turbo/
+coverage/
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+.vercel
+.vscode/
+.idea/
+
+# built API bundle (uploaded to Vercel via .vercelignore, not committed)
+apps/api/index.js
