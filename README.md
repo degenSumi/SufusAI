@@ -36,6 +36,35 @@ Built with Hono, Drizzle, the Vercel AI SDK and React, in a Turborepo monorepo w
 
 ---
 
+## Setup
+
+**Requires** Node ≥ 22, pnpm, a Postgres database (Neon works), and a Gemini API key.
+
+```bash
+pnpm install
+cp .env.example .env      # fill in DATABASE_URL + GOOGLE_GENERATIVE_AI_API_KEY
+pnpm db:push              # create tables
+pnpm db:seed              # seed demo data
+pnpm dev                  # API :3001, web :5173
+```
+
+Then open http://localhost:5173.
+
+Seed data: one customer, 6 orders spanning every status, matching shipments with tracking events, 6 invoices, a genuine duplicate-charge scenario, an in-flight refund, a subscription, 11 knowledge-base articles, and **2 prior conversations** so cross-conversation history search returns real results on the first message.
+
+### Things to try
+
+| Message | Expected |
+|---|---|
+| `Where is my order ORD-1023?` | Order agent, heuristic tier, 0 LLM calls |
+| `when will it get here?` | Still Order — pronoun resolved from context |
+| `I think I was charged twice for it` | Re-routes to Billing, checks payments, **disagrees** if there's no duplicate |
+| `Can you cancel ORD-1023?` | Refused — already shipped, offers returns |
+| `Can you cancel ORD-1024?` | Allowed — still processing |
+| `asdkjhasd` | Low confidence → fallback → clarifying question with real account options |
+
+---
+
 ## What actually happens on one message
 
 1. The user message is persisted immediately.
@@ -95,7 +124,7 @@ getOrderDetails: tool({
 
 The model has no parameter with which to request another customer's data. Compare the naive `getOrderDetails(userId, orderNumber)`, where a prompt injection is one hallucinated argument away from a data leak. There is a test asserting the exposed schema contains only `orderNumber`.
 
-Because `toolsContext` is per-request, agents are constructed per-request. That's a plain object allocation with no I/O.
+Because `toolsContext` is per-request, agents are constructed per-request.
 
 ---
 
@@ -195,62 +224,31 @@ The frontend calls the API cross-origin, which is why `CORS_ORIGIN` and the
 stream would take an extra hop through the rewrite. Streaming is the feature
 being demonstrated, so it goes browser → API directly.
 
-### The API ships as pre-built JavaScript
+### The API is bundled by tsup, not compiled by Vercel
 
-`apps/api` builds to a single `index.js` via tsup, and Vercel serves that
-rather than compiling the TypeScript itself.
+The API project's build command is `pnpm run build`, which runs tsup and emits
+a single `index.js`. Vercel serves that instead of compiling the TypeScript
+itself.
 
-This was not the original plan. Vercel's Node builder type-checks source with
-its own TypeScript version, which is older than the 5.9.3 pinned here, and it
-reported dozens of false errors against `ai@7`, `zod@4` and Drizzle's
-conditional types — fields it claimed did not exist, on tables where they
-plainly do. `pnpm typecheck` passes clean across all four packages.
-
-Bundling first removes the platform's toolchain from the equation entirely,
-and has the side benefit of making the API deployable anywhere that runs Node.
-`tsc` is still enforced — as its own `turbo` task, on a version we control.
-The same reasoning removed `tsc --noEmit` from the web `build` script.
+Vercel's Node builder type-checks source with its own TypeScript version, older
+than the 5.9.3 pinned here, and reported dozens of false errors against `ai@7`,
+`zod@4` and Drizzle's conditional types — while `pnpm typecheck` passes clean
+across all four packages. An explicit build command takes the platform's
+toolchain out of the equation: tsup bundles with esbuild, which strips types
+without checking them. `tsc` is still enforced, as its own `turbo` task on a
+version we control.
 
 ### Deploying it yourself
 
 ```bash
 vercel link --project <name>
 vercel api -X PATCH /v9/projects/<id> -f rootDirectory=apps/api
+vercel api -X PATCH /v9/projects/<id> -f buildCommand="pnpm run build"
 vercel env add DATABASE_URL production        # + the AI keys
 vercel deploy --prod
 ```
 
-`rootDirectory` is a project setting, not a `vercel.json` key — and
-`vercel link --repo` (the documented monorepo path) requires a Git remote.
-
----
-
-## Setup
-
-**Requires** Node ≥ 22, pnpm, a Postgres database (Neon works), and a Gemini API key.
-
-```bash
-pnpm install
-cp .env.example .env      # fill in DATABASE_URL + GOOGLE_GENERATIVE_AI_API_KEY
-pnpm db:push              # create tables
-pnpm db:seed              # seed demo data
-pnpm dev                  # API :3001, web :5173
-```
-
-Then open http://localhost:5173.
-
-Seed data: one customer, 6 orders spanning every status, matching shipments with tracking events, 6 invoices, a genuine duplicate-charge scenario, an in-flight refund, a subscription, 11 knowledge-base articles, and **2 prior conversations** so cross-conversation history search returns real results on the first message.
-
-### Things to try
-
-| Message | Expected |
-|---|---|
-| `Where is my order ORD-1023?` | Order agent, heuristic tier, 0 LLM calls |
-| `when will it get here?` | Still Order — pronoun resolved from context |
-| `I think I was charged twice for it` | Re-routes to Billing, checks payments, **disagrees** if there's no duplicate |
-| `Can you cancel ORD-1023?` | Refused — already shipped, offers returns |
-| `Can you cancel ORD-1024?` | Allowed — still processing |
-| `asdkjhasd` | Low confidence → fallback → clarifying question with real account options |
+`rootDirectory` and `buildCommand` are project settings, not `vercel.json` keys.
 
 ---
 
@@ -263,8 +261,6 @@ pnpm test    # 32 tests
 - **Router** — heuristic precision, the stand-down cases, threshold fallback, unknown-intent fallback, provider-failure degradation, and that prior turns actually reach the classifier.
 - **Tools** — `cancelOrder` refuses all four terminal statuses and never writes; tenant scoping; the model-visible schema contains no `userId`.
 - **Middleware** — sliding-window rate limiting (including that the window slides rather than resetting in blocks), per-caller isolation, the error envelope, validation.
-
-The classifier is stubbed with a plain function rather than `vi.fn()` — a spy records thrown results and Vitest then surfaces them as failures, which makes the "provider failed" path untestable.
 
 ---
 
