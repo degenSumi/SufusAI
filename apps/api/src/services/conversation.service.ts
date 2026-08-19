@@ -46,10 +46,13 @@ export const conversationService = {
     userId: string,
     conversationId: string,
   ): Promise<{ conversation: ConversationSummary; messages: ChatMessage[] }> {
-    const conversation = await conversationRepository.findById(userId, conversationId);
+    // Two independent round trips. The messages are discarded unless the
+    // ownership check passes, so overlapping them leaks nothing.
+    const [conversation, messages] = await Promise.all([
+      conversationRepository.findById(userId, conversationId),
+      conversationRepository.listMessages(conversationId),
+    ]);
     if (!conversation) throw new NotFoundError("Conversation", conversationId);
-
-    const messages = await conversationRepository.listMessages(conversationId);
 
     return {
       conversation: {
