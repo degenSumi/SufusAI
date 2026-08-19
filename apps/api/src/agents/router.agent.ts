@@ -68,7 +68,7 @@ function renderContext(ctx: RoutingContext): string {
   return parts.length > 0 ? parts.join("\n\n") : "This is the first message in a new conversation.";
 }
 
-const ROUTER_INSTRUCTIONS = `You are the routing layer of a customer support system for Northwind Supply, an online electronics retailer. You do not talk to customers. You read the incoming message together with the conversation so far and decide which specialist should handle it.
+const ROUTER_INSTRUCTIONS = `You are the routing layer of a customer support system for Sufus, an online electronics retailer. You do not talk to customers. You read the incoming message together with the conversation so far and decide which specialist should handle it.
 
 Available specialists:
 ${buildRoutingMenu()}

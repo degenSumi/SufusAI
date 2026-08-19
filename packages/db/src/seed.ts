@@ -309,7 +309,7 @@ async function seed() {
         invoiceNumber: "INV-2046",
         userId,
         status: "overdue",
-        lineItems: [{ description: "Northwind Plus — monthly", quantity: 1, unitPriceCents: 999 }],
+        lineItems: [{ description: "Sufus Plus — monthly", quantity: 1, unitPriceCents: 999 }],
         amountDueCents: 999,
         amountPaidCents: 0,
         issuedAt: days(-38),
@@ -420,7 +420,7 @@ async function seed() {
   console.log("Seeding subscription…");
   await db.insert(subscriptions).values({
     userId,
-    plan: "Northwind Plus",
+    plan: "Sufus Plus",
     status: "past_due",
     pricePerPeriodCents: 999,
     billingInterval: "month",
@@ -487,7 +487,7 @@ async function seed() {
       title: "What does the warranty cover?",
       category: "Products",
       keywords: "warranty guarantee cover repair 2 years faulty",
-      body: "All Northwind-branded hardware carries a 2-year warranty against manufacturing defects. Third-party brands carry the manufacturer's own warranty, usually 12 months. The warranty does not cover accidental damage, liquid damage or normal battery wear. Warranty claims need the order number and a short description of the fault.",
+      body: "All Sufus-branded hardware carries a 2-year warranty against manufacturing defects. Third-party brands carry the manufacturer's own warranty, usually 12 months. The warranty does not cover accidental damage, liquid damage or normal battery wear. Warranty claims need the order number and a short description of the fault.",
     },
     {
       slug: "headphone-crackling",

@@ -7,6 +7,12 @@
   --color-line: #232f42;
   --color-ink: #e8eef7;
   --color-muted: #8296b0;
+
+  /* Orange belongs to the product. Agents own emerald, sky and violet, so the
+     brand accent can never be mistaken for a routing decision. */
+  --color-brand: #f97316;
+  --color-brand-hi: #fb923c;
+  --color-brand-soft: #fdba74;
 }
 
 html,
@@ -20,6 +26,45 @@ body {
   color: var(--color-ink);
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient light. Warm from the top where the brand lives, cool from the bottom
+   left, so the canvas has a direction instead of reading as flat black. */
+.ambient {
+  background-image:
+    radial-gradient(820px 460px at 50% -8%, rgba(249, 115, 22, 0.2), transparent 66%),
+    radial-gradient(620px 420px at 92% 12%, rgba(249, 115, 22, 0.09), transparent 60%),
+    radial-gradient(760px 420px at 4% 104%, rgba(56, 189, 248, 0.08), transparent 62%);
+}
+
+/* Faint grid, masked so it fades out before it reaches the message area. */
+.grid-fade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 30%, transparent 100%);
+}
+
+.glow-brand {
+  box-shadow:
+    0 0 0 1px rgba(249, 115, 22, 0.3),
+    0 10px 40px -10px rgba(249, 115, 22, 0.55);
+}
+
+.lift {
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+.lift:hover {
+  transform: translateY(-2px);
 }
 
 /* Three dots that actually convey "still working" without a layout shift. */

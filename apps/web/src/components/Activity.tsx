@@ -7,9 +7,9 @@ export function StatusPill({ label }: { label: string }) {
   return (
     <div className="fade-up flex items-center gap-2.5 rounded-full border border-line bg-surface-2 px-3.5 py-2 text-sm text-muted">
       <span className="flex gap-1">
-        <span className="dot h-1.5 w-1.5 rounded-full bg-sky-400" />
-        <span className="dot h-1.5 w-1.5 rounded-full bg-sky-400" />
-        <span className="dot h-1.5 w-1.5 rounded-full bg-sky-400" />
+        <span className="dot h-1.5 w-1.5 rounded-full bg-brand" />
+        <span className="dot h-1.5 w-1.5 rounded-full bg-brand" />
+        <span className="dot h-1.5 w-1.5 rounded-full bg-brand" />
       </span>
       {label}
     </div>
@@ -89,21 +89,21 @@ export function ToolChip({ tool }: { tool: ToolData }) {
         errored
           ? "border-rose-500/25 bg-rose-500/10 text-rose-300"
           : running
-            ? "border-sky-500/25 bg-sky-500/10 text-sky-200"
+            ? "border-brand/25 bg-brand/10 text-brand-soft"
             : "border-line bg-surface text-muted"
       }`}
     >
       {running ? (
         <span className="flex gap-0.5">
-          <span className="dot h-1 w-1 rounded-full bg-sky-300" />
-          <span className="dot h-1 w-1 rounded-full bg-sky-300" />
-          <span className="dot h-1 w-1 rounded-full bg-sky-300" />
+          <span className="dot h-1 w-1 rounded-full bg-brand-soft" />
+          <span className="dot h-1 w-1 rounded-full bg-brand-soft" />
+          <span className="dot h-1 w-1 rounded-full bg-brand-soft" />
         </span>
       ) : (
         <span className={errored ? "text-rose-300" : "text-emerald-400"}>{errored ? "✕" : "✓"}</span>
       )}
 
-      <span className={running ? "text-sky-100" : ""}>{tool.label}</span>
+      <span className={running ? "text-brand-soft" : ""}>{tool.label}</span>
 
       {tool.summary && <span className="text-muted/70">· {tool.summary}</span>}
       {tool.durationMs !== undefined && !running && (

@@ -10,7 +10,7 @@ if (!process.env["VERCEL"]) {
   const { provider, models } = describeModels();
 
   serve({ fetch: app.fetch, port: env.PORT }, (info) => {
-    console.log(`\n  Northwind Support API`);
+    console.log(`\n  Sufus Support API`);
     console.log(`  ─────────────────────────────────────────`);
     console.log(`  http://localhost:${info.port}`);
     console.log(`  env       ${env.NODE_ENV}`);

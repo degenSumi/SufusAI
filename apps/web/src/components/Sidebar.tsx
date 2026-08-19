@@ -1,5 +1,7 @@
 import type { ConversationSummary } from "@repo/shared";
 import { themeFor } from "./agent-theme.js";
+import { Pitch } from "./Pitch.js";
+import { Logo } from "./Logo.js";
 
 interface SidebarProps {
   conversations: ConversationSummary[];
@@ -32,12 +34,14 @@ export function Sidebar({
     <aside className="flex w-72 shrink-0 flex-col border-r border-line bg-surface">
       <div className="border-b border-line px-4 py-4">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-500/15 text-sky-300">
-            ◆
+          <div className="glow-brand flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-hi to-brand text-white">
+            <Logo className="h-[22px] w-[22px]" />
           </div>
           <div className="min-w-0">
-            <h1 className="truncate text-sm font-semibold">Northwind Support</h1>
-            <p className="truncate text-[11px] text-muted">Multi-agent assistant</p>
+            <h1 className="truncate text-[17px] font-semibold tracking-tight">Sufus</h1>
+            <p className="truncate text-[10px] font-medium uppercase tracking-[0.14em] text-brand-soft">
+              Support As A Service
+            </p>
           </div>
         </div>
 
@@ -100,10 +104,8 @@ export function Sidebar({
         )}
       </div>
 
-      <div className="border-t border-line px-4 py-3 text-[10px] leading-relaxed text-muted">
-        Signed in as <span className="text-ink/70">Alex Morgan</span>
-        <br />
-        Router → Support · Order · Billing
+      <div className="border-t border-line px-3 py-3">
+        <Pitch />
       </div>
     </aside>
   );
