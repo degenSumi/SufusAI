@@ -31,7 +31,7 @@ export function Sidebar({
   onDelete,
 }: SidebarProps) {
   return (
-    <aside className="flex w-72 shrink-0 flex-col border-r border-line bg-surface">
+    <aside className="flex h-full w-full flex-col border-r border-line bg-surface md:w-72 md:shrink-0">
       <div className="border-b border-line px-4 py-4">
         <div className="flex items-center gap-2">
           <div className="glow-brand flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-hi to-brand text-white">
@@ -66,7 +66,7 @@ export function Sidebar({
               return (
                 <li key={conversation.id}>
                   <div
-                    className={`group flex items-start gap-2 rounded-lg px-2.5 py-2 transition-colors ${
+                    className={`group flex items-start gap-2 rounded-lg px-2.5 py-2.5 transition-colors md:py-2 ${
                       active ? "bg-surface-2 ring-1 ring-line" : "hover:bg-surface-2"
                     }`}
                   >
@@ -92,7 +92,7 @@ export function Sidebar({
                       type="button"
                       aria-label={`Delete ${conversation.title}`}
                       onClick={() => onDelete(conversation.id)}
-                      className="shrink-0 rounded px-1.5 py-0.5 text-xs text-muted opacity-0 transition-opacity hover:bg-rose-500/15 hover:text-rose-300 focus:opacity-100 group-hover:opacity-100"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded text-xs text-muted transition-opacity hover:bg-rose-500/15 hover:text-rose-300 focus:opacity-100 active:bg-rose-500/15 md:h-auto md:w-auto md:px-1.5 md:py-0.5 md:opacity-0 md:group-hover:opacity-100"
                     >
                       ✕
                     </button>
