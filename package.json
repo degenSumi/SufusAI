@@ -2,7 +2,7 @@
   "name": "support-agent-ai",
   "private": true,
   "version": "1.0.0",
-  "description": "Multi-agent AI customer support system — router agent delegating to Support, Order and Billing sub-agents",
+  "description": "Multi-agent AI customer support system \u2014 router agent delegating to Support, Order and Billing sub-agents",
   "packageManager": "pnpm@11.22.0",
   "engines": {
     "node": ">=20"
@@ -12,6 +12,8 @@
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "deploy:api": "vercel --prod --yes",
+    "deploy:web": "VERCEL_PROJECT_ID=prj_1VOllmGOS9v1VDWjGhg6hJEjAlBJ vercel --prod --yes",
     "db:push": "pnpm --filter @repo/db db:push",
     "db:seed": "pnpm --filter @repo/db db:seed",
     "db:studio": "pnpm --filter @repo/db db:studio",
