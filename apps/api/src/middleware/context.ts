@@ -19,9 +19,18 @@ export const requestId: MiddlewareHandler<AppEnv> = async (c, next) => {
   await next();
 };
 
+// Resolved once per process. Without this every /api/* request pays a database
+// round trip before it starts doing any work.
+let cachedUserId: string | undefined;
+
 // Stands in for auth. Real sessions would change this function and nothing else
 // — every layer below already reads identity from the request context.
 export const resolveUser: MiddlewareHandler<AppEnv> = async (c, next) => {
+  if (cachedUserId) {
+    c.set("userId", cachedUserId);
+    return next();
+  }
+
   const user = await userRepository.findDemoUser();
   if (!user) {
     throw new AppError(
@@ -30,6 +39,7 @@ export const resolveUser: MiddlewareHandler<AppEnv> = async (c, next) => {
       "NOT_SEEDED",
     );
   }
+  cachedUserId = user.id;
   c.set("userId", user.id);
   await next();
 };
