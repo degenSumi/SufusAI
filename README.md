@@ -1,4 +1,4 @@
-# Northwind Support — Multi-Agent AI Customer Support
+# Sufus — Multi-Agent AI Customer Support
 
 **Live demo:** https://support-agent-web-nu.vercel.app
 **API:** https://support-agent-api-ten.vercel.app/health
