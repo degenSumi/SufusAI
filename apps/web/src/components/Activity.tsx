@@ -72,7 +72,7 @@ export function RoutingCard({ route }: { route: RouteData }) {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex gap-2">
-      <span className="w-20 shrink-0 text-muted">{label}</span>
+      <span className="w-16 shrink-0 text-muted md:w-20">{label}</span>
       <span className="text-ink/90">{value}</span>
     </div>
   );
