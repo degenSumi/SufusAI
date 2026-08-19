@@ -18,10 +18,15 @@
 html,
 body,
 #root {
-  height: 100%;
+  height: 100vh;
+  /* Mobile browsers resize the viewport as the URL bar hides and shows; 100%
+     resolves against the larger one and pushes the composer out of reach. */
+  height: 100dvh;
 }
 
 body {
+  /* Taps should feel like presses, not like nothing happened. */
+  -webkit-tap-highlight-color: transparent;
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
