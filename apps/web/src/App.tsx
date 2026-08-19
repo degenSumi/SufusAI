@@ -341,8 +341,8 @@ function EmptyState({ onPick, disabled }: { onPick: (text: string) => void; disa
 
       <h2 className="mt-5 text-lg font-medium text-ink/90 md:mt-6">How can we help, Alex?</h2>
       <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
-        A router agent reads your message and hands it to the right specialist. You will see which
-        one it picked and why.
+        Custom AI agents for any business workflow. This one runs a support desk — ask about an
+        order, a charge or a policy, and watch it route itself to the right specialist.
       </p>
 
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
