@@ -1,7 +1,23 @@
-# Sufus — Multi-Agent AI Customer Support
+<h1 align="center">Sufus</h1>
 
-**Live demo:** https://support-agent-web-nu.vercel.app
-**API:** https://support-agent-api-ten.vercel.app/health
+<p align="center"><strong>Support As A Service</strong><br>Custom AI agents for any business workflow.</p>
+
+<p align="center">
+  <a href="https://support-agent-web-nu.vercel.app"><img alt="Live demo" src="https://img.shields.io/badge/Live_demo-Open_app-f97316?style=for-the-badge&logo=vercel&logoColor=white"></a>
+  <a href="https://support-agent-api-ten.vercel.app/health"><img alt="API health" src="https://img.shields.io/badge/API-health-22c55e?style=for-the-badge&logo=hono&logoColor=white"></a>
+</p>
+
+<p align="center">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white">
+  <img alt="Hono" src="https://img.shields.io/badge/Hono-e36002?style=flat-square&logo=hono&logoColor=white">
+  <img alt="React" src="https://img.shields.io/badge/React_19-087ea4?style=flat-square&logo=react&logoColor=white">
+  <img alt="Drizzle" src="https://img.shields.io/badge/Drizzle-c5f74f?style=flat-square&logo=drizzle&logoColor=black">
+  <img alt="Postgres" src="https://img.shields.io/badge/Postgres-336791?style=flat-square&logo=postgresql&logoColor=white">
+  <img alt="AI SDK" src="https://img.shields.io/badge/Vercel_AI_SDK_v7-000000?style=flat-square&logo=vercel&logoColor=white">
+  <img alt="Turborepo" src="https://img.shields.io/badge/Turborepo-ef4444?style=flat-square&logo=turborepo&logoColor=white">
+</p>
+
+---
 
 A customer support system where a **router agent** classifies each incoming message and delegates it to one of three specialists — **Support**, **Order**, or **Billing** — each with its own tools backed by a real Postgres database.
 
