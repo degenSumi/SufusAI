@@ -240,13 +240,31 @@ version we control.
 
 ### Deploying it yourself
 
+Both projects are Git-connected, so `git push origin main` builds and ships
+them. `vercel link --repo` writes a `.vercel/repo.json` holding both, which is
+what lets the CLI resolve the right project from any directory:
+
+```bash
+vercel link --repo          # links both projects in one go
+cd apps/api && vercel --prod
+cd apps/web && vercel --prod
+```
+
+First-time setup for a fresh account:
+
 ```bash
 vercel link --project <name>
 vercel api -X PATCH /v9/projects/<id> -f rootDirectory=apps/api
 vercel api -X PATCH /v9/projects/<id> -f buildCommand="pnpm run build"
+vercel api -X POST /v9/projects/<id>/link -F type=github -F repo=<owner>/<repo>
 vercel env add DATABASE_URL production        # + the AI keys
-vercel deploy --prod
 ```
+
+**Deploy from the repo root, not from `apps/api`.** Root Directory is a project
+setting, so Vercel needs the whole workspace uploaded and then builds inside
+the subdirectory. Running `vercel` from `apps/api` alone uploads only that
+folder — with no `pnpm-workspace.yaml` or lockfile, `workspace:*` cannot
+resolve and the install fails.
 
 `rootDirectory` and `buildCommand` are project settings, not `vercel.json` keys.
 
