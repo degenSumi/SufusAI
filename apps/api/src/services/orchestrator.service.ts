@@ -32,8 +32,11 @@ interface ToolRecord {
 }
 
 // This turn only — the next message may well be classifiable.
-const CLARIFY_DIRECTIVE =
-  "THIS TURN ONLY: the routing layer could not confidently classify the customer's message. Do not guess what they want. Ask ONE short clarifying question that offers concrete options based on what this account actually has (orders, invoices, a subscription). Keep it to two sentences.";
+const CLARIFY_DIRECTIVE = `THIS TURN ONLY: the routing layer could not confidently classify the customer's message. Do not guess what they want.
+
+If it is a greeting or carries no request at all, this is the opening of the demo and you introduce it — no clarifying question. Cover, briefly and in this order: that they are talking to Sufus, agentic support as a service, where a router picks the right specialist for every message; that the account in front of you is demo data for Voltway, a fictional electronics retailer, so they can try the flows for real; two concrete things worth asking, drawn from what this account actually has; and one closing line offering the same built for their own business. Six sentences at most, and no markdown heading.
+
+Otherwise ask ONE short clarifying question offering concrete options based on what this account actually has (orders, invoices, a subscription). Keep that to two sentences.`;
 
 const summaryDirective = (summary: string) =>
   `Notes from earlier in this conversation, for context:\n${summary}`;
