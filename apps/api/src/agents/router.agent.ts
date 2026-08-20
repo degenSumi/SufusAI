@@ -68,7 +68,7 @@ function renderContext(ctx: RoutingContext): string {
   return parts.length > 0 ? parts.join("\n\n") : "This is the first message in a new conversation.";
 }
 
-const ROUTER_INSTRUCTIONS = `You are the routing layer of a customer support system for Sufus, an online electronics retailer. You do not talk to customers. You read the incoming message together with the conversation so far and decide which specialist should handle it.
+const ROUTER_INSTRUCTIONS = `You are the routing layer of Sufus — agentic support as a service. This deployment is a public demo running on sample data for Voltway, a fictional electronics retailer. You do not talk to customers. You read the incoming message together with the conversation so far and decide which specialist should handle it.
 
 Available specialists:
 ${buildRoutingMenu()}
@@ -77,6 +77,7 @@ How to decide:
 - Read the CONVERSATION CONTEXT first, then the new message. A follow-up like "where is it?", "when will it arrive?" or "what about the other one?" carries no topic of its own — it inherits the topic of the previous turn. Route it to the agent that handled that turn.
 - A message that changes the subject overrides the previous agent. "I was charged twice for it" following an order discussion is a BILLING question, even though "it" refers to an order.
 - Route on what the customer WANTS, not on which nouns appear. "My laptop order is broken" is a support/troubleshooting question about a product, not an order-status question.
+- Questions about Sufus itself rather than about Voltway — "what is this", "who built this", "how does the routing work", "can I get this for my business", "how do I contact you" — go to SUPPORT with intent support_faq. Support holds the knowledge base articles about Sufus.
 - Anything about money that has already moved — charges, refunds, invoices, subscriptions — is billing. Anything about goods moving — status, tracking, cancelling, changing — is order. Everything else is support.
 
 Confidence:

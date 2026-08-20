@@ -309,7 +309,7 @@ async function seed() {
         invoiceNumber: "INV-2046",
         userId,
         status: "overdue",
-        lineItems: [{ description: "Sufus Plus — monthly", quantity: 1, unitPriceCents: 999 }],
+        lineItems: [{ description: "Voltway Plus — monthly", quantity: 1, unitPriceCents: 999 }],
         amountDueCents: 999,
         amountPaidCents: 0,
         issuedAt: days(-38),
@@ -420,7 +420,7 @@ async function seed() {
   console.log("Seeding subscription…");
   await db.insert(subscriptions).values({
     userId,
-    plan: "Sufus Plus",
+    plan: "Voltway Plus",
     status: "past_due",
     pricePerPeriodCents: 999,
     billingInterval: "month",
@@ -432,7 +432,7 @@ async function seed() {
   });
 
   console.log("Seeding knowledge base…");
-  await db.insert(kbArticles).values([
+  const articleRows = await db.insert(kbArticles).values([
     {
       slug: "return-window",
       title: "How long do I have to return an item?",
@@ -487,7 +487,7 @@ async function seed() {
       title: "What does the warranty cover?",
       category: "Products",
       keywords: "warranty guarantee cover repair 2 years faulty",
-      body: "All Sufus-branded hardware carries a 2-year warranty against manufacturing defects. Third-party brands carry the manufacturer's own warranty, usually 12 months. The warranty does not cover accidental damage, liquid damage or normal battery wear. Warranty claims need the order number and a short description of the fault.",
+      body: "All Voltway-branded hardware carries a 2-year warranty against manufacturing defects. Third-party brands carry the manufacturer's own warranty, usually 12 months. The warranty does not cover accidental damage, liquid damage or normal battery wear. Warranty claims need the order number and a short description of the fault.",
     },
     {
       slug: "headphone-crackling",
@@ -510,7 +510,35 @@ async function seed() {
       keywords: "contact hours phone human agent talk speak escalate",
       body: "Live chat and phone support run Monday to Friday, 7am to 7pm Pacific, and Saturday 9am to 4pm. Outside those hours this assistant can still look up orders, invoices and refunds. To reach a person, ask to escalate and we create a ticket with a callback within one business day.",
     },
-  ]);
+    {
+      slug: "about-sufus",
+      title: "What is Sufus?",
+      category: "Sufus",
+      keywords: "sufus what is this who built this platform agentic support as a service demo about",
+      body: "Sufus is agentic support as a service. It is the system answering you right now, not a shop. A router agent reads each message, decides which specialist should handle it, and that specialist uses real tools against a real database to answer — so every order number, amount and date is looked up, never invented. This deployment is a public demo: the orders, invoices and refunds belong to Voltway, a fictional electronics retailer, so anyone can try the flows end to end without touching real customer data.",
+    },
+    {
+      slug: "sufus-how-it-works",
+      title: "How does Sufus decide which agent answers?",
+      category: "Sufus",
+      keywords: "sufus how it works routing router agents specialists architecture technology multi-agent",
+      body: "Every message goes through a routing layer first. Obvious cases are matched by pattern in code with no model call at all. Everything else is classified by a model that returns a specialist, an intent and a confidence score. Below a confidence threshold Sufus deliberately refuses to specialise and asks one clarifying question instead of guessing. The chosen specialist — Support, Order or Billing — has only the tools its job needs, so it is structurally incapable of reaching data outside its remit. The routing decision and each tool call are shown in the interface as they happen.",
+    },
+    {
+      slug: "sufus-for-your-business",
+      title: "Can I get Sufus for my own business?",
+      category: "Sufus",
+      keywords: "sufus for my business custom build pricing hire buy own company get this agents workflows",
+      body: "Yes — this is what Sufus does. The orchestration, routing, context management and streaming interface are the product; the tools and workflows are built for each business. Support desks, inventory, enquiries and order operations are all the same architecture with different tools. It runs on your data, inside your business, and can be deployed into your own infrastructure so nothing leaves it. Sufus can be embedded as a widget in an existing product or run as a dedicated application in your branding.",
+    },
+    {
+      slug: "sufus-contact",
+      title: "How do I contact the team behind Sufus?",
+      category: "Sufus",
+      keywords: "sufus contact talk to someone reach out hire enquire demo call email twitter linkedin",
+      body: "Sufus is built by Sumit Singh Bisht. The fastest way to start a conversation is X at https://x.com/degenSumi or LinkedIn at https://www.linkedin.com/in/sumit-singh-bisht. Mention the workflow you want automated and roughly how your data is stored today; that is enough to scope a first build.",
+    },
+  ]).returning();
 
   console.log("Seeding prior conversations…");
   // Two closed conversations from earlier weeks. These exist so the Support
@@ -589,7 +617,7 @@ async function seed() {
   console.log(`  orders        ${orderRows.length}`);
   console.log(`  invoices      ${invoiceRows.length}`);
   console.log(`  payments      ${paymentRows.length}`);
-  console.log(`  kb articles   11`);
+  console.log(`  kb articles   ${articleRows.length}`);
   console.log(`  prior chats   2\n`);
   console.log("  Try: \"where is my order ORD-1023?\" then \"when will it get here?\"\n");
 }
