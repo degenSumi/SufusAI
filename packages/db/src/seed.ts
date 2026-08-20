@@ -528,8 +528,8 @@ async function seed() {
       slug: "sufus-for-your-business",
       title: "Can I get Sufus for my own business?",
       category: "Sufus",
-      keywords: "sufus for my business custom build pricing hire buy own company get this agents workflows",
-      body: "Yes — this is what Sufus does. The orchestration, routing, context management and streaming interface are the product; the tools and workflows are built for each business. Support desks, inventory, enquiries and order operations are all the same architecture with different tools. It runs on your data, inside your business, and can be deployed into your own infrastructure so nothing leaves it. Sufus can be embedded as a widget in an existing product or run as a dedicated application in your branding.",
+      keywords: "sufus for my business custom build pricing hire buy own company get this agents workflows helpdesk internal knowledge base automate",
+      body: "Yes — this is what Sufus does. The orchestration, routing, context management and streaming interface are the product; the tools and workflows are built for each business. Customer support, order operations, internal helpdesks, internal knowledge bases, inventory and enquiries are all the same architecture with different tools. It runs on your data, inside your business, and can be deployed into your own infrastructure so nothing leaves it. Sufus can be embedded as a widget in an existing product or run as a dedicated application in your branding.",
     },
     {
       slug: "sufus-contact",
